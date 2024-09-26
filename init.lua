@@ -9,7 +9,7 @@ local auto = vim.api.nvim_create_autocmd
 -- Options
 opt.tabstop = 2
 opt.softtabstop = 2  -- Number of spaces that a <Tab> counts for
-opt.textwidth = 120
+opt.textwidth = 80
 opt.shiftwidth = 2   -- Size of an indent
 opt.expandtab = true -- Use spaces instead of tabs
 opt.colorcolumn = '121'
@@ -19,7 +19,7 @@ opt.number = true
 -- opt.autochdir = true   -- change directory to directory of open buffer
 opt.hlsearch = false      -- Set highlight on search
 opt.mouse = 'a'           -- Enable mouse mode
--- opt.clipboard = 'unnamedplus' -- Sync clipboard between OS and Neovim.
+opt.clipboard = 'unnamedplus' -- Sync clipboard between OS and Neovim.
 opt.breakindent = true    -- Enable break indent
 opt.undofile = true       -- Save undo history
 opt.wrap = false

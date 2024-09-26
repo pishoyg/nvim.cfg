@@ -125,6 +125,8 @@ return {
 			local servers = {
 				clangd = {},
 				gopls = {},
+				ts_ls = {},
+				eslint = {},
 			}
 
       for server_name, config in pairs(servers) do

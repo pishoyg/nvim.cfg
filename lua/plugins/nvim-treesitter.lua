@@ -47,19 +47,35 @@ return { -- Highlight, edit, and navigate code
           set_jumps = true,   -- whether to set jumps in the jumplist
           goto_next_start = {
             [']m'] = '@function.outer',
+            [']p'] = '@parameter.outer',
             [']]'] = '@class.outer',
+            [']im'] = '@function.inner',
+            [']ip'] = '@parameter.inner',
+            [']i]'] = '@class.inner',
           },
           goto_next_end = {
             [']M'] = '@function.outer',
-            [']['] = '@class.outer',
+            [']P'] = '@parameter.outer',
+            [']}'] = '@class.outer',
+            [']iM'] = '@function.inner',
+            [']iP'] = '@parameter.inner',
+            [']i}'] = '@class.inner',
           },
           goto_previous_start = {
             ['[m'] = '@function.outer',
+            ['[p'] = '@parameter.outer',
             ['[['] = '@class.outer',
+            ['[im'] = '@function.inner',
+            ['[ip'] = '@parameter.inner',
+            ['[i['] = '@class.inner',
           },
           goto_previous_end = {
             ['[M'] = '@function.outer',
-            ['[]'] = '@class.outer',
+            ['[P'] = '@parameter.outer',
+            ['[}'] = '@class.outer',
+            ['[iM'] = '@function.inner',
+            ['[iP'] = '@parameter.inner',
+            ['[i}'] = '@class.inner',
           },
         },
         swap = {
