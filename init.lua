@@ -48,25 +48,16 @@ package.path = package.path .. ";" .. rocks .. "/init.lua;"
 package.path = package.path .. ";" .. rocks .. ".lua;"
 -- Plugin Manager
 require('config.lazy')
--- Set Theme
-exec.colorscheme "catppuccin"
-
-auto(
-  'BufWritePost', {
-    desc = "Format Go/C/C++/Verilog on save",
-    pattern = { "*.go", "*.c", "*.h", "*.cpp", "*.hpp", "*.cc", "*.hh", "*.v", "*.sv" },
-    callback = function()
-      vim.lsp.buf.format()
-    end,
-  }
-)
-auto(
-  { 'vimEnter' }, {
-    desc = "typst watch on typst files",
-    pattern = { "*.typ" },
-    command = "TypstWatch",
-  }
-)
+--
+-- auto(
+--   'BufWritePost', {
+--     desc = "Format Go/C/C++/Verilog on save",
+--     pattern = { "*.go", "*.c", "*.h", "*.cpp", "*.hpp", "*.cc", "*.hh", "*.v", "*.sv" },
+--     callback = function()
+--       vim.lsp.buf.format()
+--     end,
+--   }
+-- )
 
 auto('TermEnter', { command = 'startinsert' })
 
@@ -89,83 +80,3 @@ key({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true }) -- Leader
 -- Remap for dealing with word wrap
 key('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 key('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-
-Capabilities = vim.lsp.protocol.make_client_capabilities()
-Capabilities = require('cmp_nvim_lsp').default_capabilities(Capabilities)
-Capabilities.textDocument.foldingRange = {
-  dynamicRegistration = false,
-  lineFoldingOnly = true
-}
-
-On_attach = function(_, bufnr)
-  local nmap = function(keys, func, desc)
-    if desc then
-      desc = 'LSP: ' .. desc
-    end
-
-    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
-  end
-
-  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-  nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-
-  -- Lesser used LSP functionality
-  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  nmap('<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, '[W]orkspace [L]ist Folders')
-
-  -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
-end
-
-local serverlist = {
-  clangd = {},
-  lua_ls = {
-    settings = { Lua = { diagnostics = { globals = { 'vim' } } }, },
-  },
-  basedpyright = {},
-  -- rust_analyzer = {}, -- using rustacean.nvim
-  nixd = {
-    settings = {
-      nixd = {
-        nixpkgs = {
-          expr = "import <nixpkgs> { }",
-        },
-        formatting = {
-          command = { "nixfmt" },
-        },
-        options = {
-          nixos = {
-            expr = '(builtins.getFlake ("git+file://" + toString ./.)).nixosConfigurations.k-on.options',
-          },
-          home_manager = {
-            expr = '(builtins.getFlake ("git+file://" + toString ./.)).homeConfigurations."ruixi@k-on".options',
-          },
-        },
-      },
-    },
-  },
-  jdtls = {},
-  typst_lsp = {},
-}
-
-for name, info in pairs(serverlist) do
-   require'lspconfig'[name].setup {
-    capabilities = Capabilities,
-    on_attach = On_attach,
-    settings = info.settings,
-    cmd = info.cmd,
-  }
-end
