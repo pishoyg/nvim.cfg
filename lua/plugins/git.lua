@@ -49,7 +49,7 @@ return {
         end, 'Git [h]unk [r]eset')
 
         map('n', '<leader>bs', gitsigns.stage_buffer, 'Git [b]uffer [s]tage')
-        map('n', '<leader>bs', gitsigns.reset_buffer, 'Git [b]uffer [r]eset')
+        map('n', '<leader>br', gitsigns.reset_buffer, 'Git [b]uffer [r]eset')
         map('n', '<leader>hp', gitsigns.preview_hunk, 'Git [h]unk [p]review')
         map('n', '<leader>hi', gitsigns.preview_hunk_inline, 'Git [h]unk preview [i]nline')
 
