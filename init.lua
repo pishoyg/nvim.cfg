@@ -15,6 +15,7 @@ opt.expandtab = true -- Use spaces instead of tabs
 opt.colorcolumn = '121'
 opt.spell = true
 opt.relativenumber = true -- Show relative line numbers
+opt.number = true
 -- opt.autochdir = true   -- change directory to directory of open buffer
 opt.hlsearch = false      -- Set highlight on search
 opt.mouse = 'a'           -- Enable mouse mode
